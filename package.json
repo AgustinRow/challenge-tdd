@@ -1,0 +1,23 @@
+{
+  "name": "challenge-tdd",
+  "version": "1.0.0",
+  "description": "Ejercicio de TDD del challenge propuesto por Mikroways",
+  "main": "corchetes.js",
+  "scripts": {
+    "test": "qunit test/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AgustinRow/challenge-tdd.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AgustinRow/challenge-tdd/issues"
+  },
+  "homepage": "https://github.com/AgustinRow/challenge-tdd#readme",
+  "dependencies": {
+    "qunit": "^2.14.1"
+  }
+}
