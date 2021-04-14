@@ -1,28 +1,35 @@
 const corchetesBalanceados = (str) => {
-  var strCounter = 0;
-  var strIndex = 0;
-  if (str[strIndex] === "") {
-    return true;
-  } else {
-    if (str.length % 2 == 0) {
-      while (strIndex < str.length) {
-        if (str[strIndex] === "[") {
-          strCounter++;
-          strIndex++;
-        } else {
-          if (strCounter > 0) {
-            strCounter--;
-            strIndex++;
-          } else {
-            return false;
-          }
-        }
-      }
-      return true;
-    }
-    return false;
-  }
+  return esPar(str) && esBalanceado(str);
 };
+function esVacio(str) {
+  console.log(str[0]);
+  return str[0] == "";
+}
+function esPar(str) {
+  return str.length % 2 == 0;
+}
+
+function esBalanceado(str) {
+  var index = 0;
+  var count = 0;
+  while (!llegoAlFinal(str, index)) {
+    if (str[index] === "[") {
+      count++;
+    } else {
+      if (count > 0) {
+        count--;
+      } else {
+        return false;
+      }
+    }
+    index++;
+  }
+  return true;
+}
+
+function llegoAlFinal(str, index) {
+  return index >= str.length;
+}
 
 QUnit.test("Corchetes balanceados unit testing", (assert) => {
   // string vacio

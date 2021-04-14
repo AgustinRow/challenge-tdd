@@ -1,6 +1,6 @@
 const cambio = [1000, 500, 200, 100, 50, 20, 10, 5, 2, 1];
 
-const encuentraElBillete = (numero, unidades) => {
+const cambioDevuelto = (numero, unidades) => {
   let resto = [];
   if (unidades != 0) {
     numero = numero * Math.pow(10, unidades);
@@ -12,41 +12,46 @@ const encuentraElBillete = (numero, unidades) => {
   }
   return resto.reverse();
 };
+const esPagoExacto = (vuelto) => {
+  return vuelto == 0;
+};
 
-const calculadoraDeVuelto = (pago, precio) => {
-  let vuelto = pago - precio;
-  if (vuelto == 0) {
+const vueltoConDenominacionArgentina = (vuelto) => {
+  var res = [];
+  let count = 0;
+  while (vuelto > 0) {
+    const ultimoDigito = vuelto % 10;
+    if (ultimoDigito != 0) {
+      res.unshift(cambioDevuelto(ultimoDigito, count));
+    }
+    vuelto = Math.floor(vuelto / 10);
+    count++;
+  }
+  return res.flat(1);
+};
+
+const calcularVuelto = (pago, importe) => {
+  let vuelto = pago - importe;
+  if (esPagoExacto(vuelto)) {
     return [0];
   } else {
-    var res = [];
-    let count = 0;
-    while (vuelto > 0) {
-      const ultimoDigito = vuelto % 10;
-      if (ultimoDigito != 0) {
-        res.unshift(encuentraElBillete(ultimoDigito, count));
-      }
-      vuelto = Math.floor(vuelto / 10);
-      count++;
-    }
-    return res.flat(1);
+    return vueltoConDenominacionArgentina(vuelto);
   }
 };
 
-//console.log(calculaELVuelto(1000, 442));
-
 QUnit.test("testear el vuelto", (assert) => {
   // Vuelto justo
-  assert.deepEqual(calculadoraDeVuelto(100, 100), [0]);
+  assert.deepEqual(calcularVuelto(100, 100), [0]);
   //
-  assert.deepEqual(calculadoraDeVuelto(100, 75), [20, 5]);
+  assert.deepEqual(calcularVuelto(100, 75), [20, 5]);
   //
-  assert.deepEqual(calculadoraDeVuelto(200, 75), [100, 20, 5]);
+  assert.deepEqual(calcularVuelto(200, 75), [100, 20, 5]);
   //
-  assert.deepEqual(calculadoraDeVuelto(1000, 442), [500, 50, 5, 2, 1]);
+  assert.deepEqual(calcularVuelto(1000, 442), [500, 50, 5, 2, 1]);
   //
-  assert.deepEqual(calculadoraDeVuelto(500, 50), [200, 200, 50]);
+  assert.deepEqual(calcularVuelto(500, 50), [200, 200, 50]);
   //
-  assert.deepEqual(calculadoraDeVuelto(1889, 1), [
+  assert.deepEqual(calcularVuelto(1889, 1), [
     1000,
     500,
     200,
