@@ -21,4 +21,4 @@ de node llamado QUnit.
 
 - Run:
 
-`npm run migrate`
+`npm run test`
